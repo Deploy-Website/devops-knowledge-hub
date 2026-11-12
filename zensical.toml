@@ -1,0 +1,136 @@
+# DevOps Knowledge Base - Zensical 0.1.1
+# Trước khi publish, thêm site_url phù hợp hosting thật (đặc biệt khi dùng GitHub Pages).
+[project]
+site_name = "DevOps Knowledge Base"
+site_description = "Tài liệu DevOps thực chiến: Linux, Docker, Git, CI/CD, Kubernetes, Terraform, AWS, Observability, Security và Runbooks."
+site_author = "DevOps Engineering"
+copyright = "© 2026 DevOps Knowledge Base"
+docs_dir = "docs"
+site_dir = "site"
+extra_css = ["stylesheets/extra.css"]
+
+nav = [
+  { "Trang chủ" = "index.md" },
+  { "Bắt đầu" = [
+    { "Tổng quan" = "getting-started/index.md" },
+    { "Lộ trình DevOps" = "getting-started/learning-path.md" },
+    { "Workstation trên WSL" = "getting-started/workstation.md" },
+  ] },
+  { "Linux & WSL" = [
+    { "Tổng quan" = "linux-wsl/index.md" },
+    { "Linux CLI & permission" = "linux-wsl/linux-cli.md" },
+    { "systemd & network" = "linux-wsl/systemd-network.md" },
+    { "WSL Ubuntu thực chiến" = "linux-wsl/wsl-development.md" },
+  ] },
+  { "Git" = [
+    { "Tổng quan" = "git/index.md" },
+    { "Branching & pull request" = "git/branching.md" },
+    { "Xử lý merge conflict" = "git/conflict.md" },
+  ] },
+  { "Docker & Compose" = [
+    { "Tổng quan" = "docker/index.md" },
+    { "Docker Engine trên WSL" = "docker/engine-wsl.md" },
+    { "Dockerfile production" = "docker/dockerfile.md" },
+    { "Docker Compose" = "docker/compose.md" },
+    { "Debug container" = "docker/debugging.md" },
+  ] },
+  { "Networking" = [
+    { "Tổng quan" = "networking/index.md" },
+    { "TCP, DNS và HTTP" = "networking/fundamentals.md" },
+    { "TLS & certificates" = "networking/tls.md" },
+  ] },
+  { "CI/CD" = [
+    { "Tổng quan" = "ci-cd/index.md" },
+    { "CI/CD fundamentals" = "ci-cd/fundamentals.md" },
+    { "GitHub Actions" = "ci-cd/github-actions.md" },
+    { "Release & rollback" = "ci-cd/release.md" },
+  ] },
+  { "Kubernetes" = [
+    { "Tổng quan" = "kubernetes/index.md" },
+    { "Kiến trúc Kubernetes" = "kubernetes/architecture.md" },
+    { "Deployment & Service" = "kubernetes/deployments.md" },
+    { "Troubleshooting cluster" = "kubernetes/troubleshooting.md" },
+  ] },
+  { "Terraform" = [
+    { "Tổng quan" = "terraform/index.md" },
+    { "HCL & workflow" = "terraform/basics.md" },
+    { "State & remote backend" = "terraform/state.md" },
+  ] },
+  { "AWS" = [
+    { "Tổng quan" = "aws/index.md" },
+    { "IAM & least privilege" = "aws/iam.md" },
+    { "EC2 & VPC networking" = "aws/network.md" },
+    { "CloudWatch & alerting" = "aws/cloudwatch.md" },
+    { "EventBridge Scheduler" = "aws/eventbridge.md" },
+  ] },
+  { "Observability" = [
+    { "Tổng quan" = "observability/index.md" },
+    { "Metrics, logs & traces" = "observability/signals.md" },
+    { "Alert design" = "observability/incident-alerting.md" },
+  ] },
+  { "Security" = [
+    { "Tổng quan" = "security/index.md" },
+    { "Secrets management" = "security/secrets.md" },
+    { "Supply-chain security" = "security/supply-chain.md" },
+  ] },
+  { "Best Practices" = [
+    { "Tổng quan" = "best-practices/index.md" },
+    { "Production checklist" = "best-practices/production-checklist.md" },
+    { "Docs as Code" = "best-practices/docs-as-code.md" },
+  ] },
+  { "Runbooks" = [
+    { "Tổng quan" = "runbooks/index.md" },
+    { "Deploy thất bại" = "runbooks/deployment-failed.md" },
+    { "Disk đầy" = "runbooks/disk-full.md" },
+    { "Không truy cập được port Docker" = "runbooks/port-conflict.md" },
+    { "Certificate không tự renew" = "runbooks/tls-renewal.md" },
+    { "Template ghi chép incident" = "runbooks/incident-template.md" },
+  ] },
+  { "Nguồn tham khảo" = "references.md" },
+]
+
+[project.theme]
+variant = "modern"
+language = "vi"
+features = [
+  "navigation.tabs",
+  "navigation.sections",
+  "navigation.path",
+  "navigation.top",
+  "toc.follow",
+  "content.code.copy",
+  "search.highlight",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+primary = "indigo"
+accent = "teal"
+toggle.icon = "lucide/sun"
+toggle.name = "Chuyển sang giao diện tối"
+
+[[project.theme.palette]]
+scheme = "slate"
+primary = "indigo"
+accent = "teal"
+toggle.icon = "lucide/moon"
+toggle.name = "Chuyển sang giao diện sáng"
+
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+def_list = {}
+tables = {}
+toc.permalink = true
+pymdownx.details = {}
+pymdownx.inlinehilite = {}
+pymdownx.highlight.anchor_linenums = true
+pymdownx.highlight.line_spans = "__span"
+pymdownx.highlight.pygments_lang_class = true
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.tabbed.alternate_style = true
+pymdownx.tasklist.custom_checkbox = true
+
+[project.plugins.tags]

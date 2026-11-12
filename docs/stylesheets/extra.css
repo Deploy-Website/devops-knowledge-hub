@@ -1,0 +1,10 @@
+/* Giữ giao diện Zensical mặc định và chỉ tùy chỉnh thành phần nội dung. */
+.md-typeset table:not([class]) {
+  font-size: 0.9rem;
+}
+.md-typeset code {
+  overflow-wrap: anywhere;
+}
+.md-typeset h2 {
+  margin-top: 1.5em;
+}

@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+site/
+.cache/
+.env
+.env.*
+!.env.example
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/

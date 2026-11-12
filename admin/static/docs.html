@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevOps Knowledge Base</title>
+  <link rel="stylesheet" href="/docs.css" />
+</head>
+<body>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <div class="header-left">
+        <button id="btnToggleMenu" class="menu-toggle" type="button" aria-label="Mở menu">☰</button>
+        <a id="brandLink" class="site-brand" href="?page=index.md">
+          <span class="brand-badge">DB</span>
+          <span id="siteName">DevOps Knowledge Base</span>
+        </a>
+      </div>
+
+      <div class="header-right">
+        <div class="search-box">
+          <input id="docsSearch" type="search" placeholder="Tìm tài liệu..." autocomplete="off" />
+          <div id="searchResults" class="search-results hidden"></div>
+        </div>
+        <button id="btnThemeToggle" class="header-btn" type="button" title="Chuyển giao diện Sáng/Tối">
+          Giao diện
+        </button>
+        <a id="btnOpenAdmin" class="header-btn header-btn-primary" href="/">
+          Trang quản trị
+        </a>
+      </div>
+    </div>
+
+    <nav id="topTabs" class="top-tabs" aria-label="Chủ đề"></nav>
+  </header>
+
+  <div class="docs-shell">
+    <aside id="docsSidebar" class="docs-sidebar">
+      <div id="sidebarNav" class="sidebar-nav"></div>
+    </aside>
+
+    <main class="docs-main">
+      <article id="articleBody" class="article-content">
+        <div class="loading">Đang tải tài liệu...</div>
+      </article>
+
+      <footer class="article-footer">
+        <div id="pagerNav" class="pager-nav"></div>
+        <div id="siteCopyright" class="copyright"></div>
+      </footer>
+    </main>
+
+    <aside class="docs-toc">
+      <div class="toc-title">Trên trang này</div>
+      <ul id="tocList" class="toc-list"></ul>
+    </aside>
+  </div>
+
+  <script src="/docs.js"></script>
+</body>
+</html>

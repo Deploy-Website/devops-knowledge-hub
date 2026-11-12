@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản trị nội dung — DevOps Docs Hub</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <button id="btnDashboard" class="brand" type="button" title="Về trang tổng quan">
+        <span class="brand-dot"></span>
+        <span>DevOps Docs Hub — Quản trị</span>
+      </button>
+    </div>
+    <div class="topbar-actions">
+      <button id="btnValidate" class="status-pill" type="button" title="Xem chi tiết kiểm tra tài liệu">
+        Đang kiểm tra...
+      </button>
+      <button id="btnBuild" class="btn btn-ghost hidden" type="button" title="Chạy zensical build --strict">
+        Kiểm tra Build
+      </button>
+      <a id="btnViewDocs" class="btn btn-secondary" href="/docs" target="_blank" rel="noopener">
+        Xem trang Docs
+      </a>
+      <button id="btnNewSection" class="btn btn-secondary" type="button">
+        + Thêm mục
+      </button>
+      <button id="btnNewArticle" class="btn btn-primary" type="button">
+        + Thêm bài viết
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-search">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Tìm mục hoặc bài viết..."
+          autocomplete="off"
+        />
+      </div>
+      <div id="treeContainer" class="tree-container">
+        <div class="loading">Đang tải danh sách mục và bài viết...</div>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <section id="dashboardView" class="dashboard">
+        <div class="dashboard-header">
+          <div>
+            <h1>Quản lý mục và bài viết</h1>
+            <p class="muted">
+              Thêm, sửa, xóa mục và bài viết đồng bộ trực tiếp với <code>zensical.toml</code> và thư mục <code>docs/</code>.
+              Bài viết mới mặc định hiển thị tiêu đề, phần nội dung do bạn tự viết.
+            </p>
+          </div>
+          <div class="dashboard-cta">
+            <button id="btnDashNewSection" class="btn btn-secondary" type="button">+ Thêm mục</button>
+            <button id="btnDashNewArticle" class="btn btn-primary" type="button">+ Thêm bài viết</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Tổng số mục</span>
+            <strong id="statSections" class="stat-value">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Tổng số bài viết</span>
+            <strong id="statArticles" class="stat-value">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Mới có tiêu đề (chưa viết nội dung)</span>
+            <strong id="statEmpty" class="stat-value">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Trạng thái cấu trúc</span>
+            <strong id="statValid" class="stat-value">—</strong>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>Danh sách các mục</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="sections-table">
+              <thead>
+                <tr>
+                  <th>Mục</th>
+                  <th>Loại</th>
+                  <th>Thư mục / File</th>
+                  <th>Số bài</th>
+                  <th class="col-actions">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="sectionsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="editorView" class="editor-view hidden">
+        <div class="editor-header">
+          <div class="editor-header-left">
+            <span id="editorModeBadge" class="badge badge-new">Bài viết mới</span>
+            <span id="editorPathLabel" class="path-label"></span>
+          </div>
+          <div class="editor-header-actions">
+            <button id="btnDeleteArticle" class="btn btn-danger hidden" type="button">
+              Xóa bài viết
+            </button>
+            <button id="btnCancelEdit" class="btn btn-ghost" type="button">
+              Đóng
+            </button>
+            <button id="btnSaveArticle" class="btn btn-primary" type="button">
+              Lưu bài viết
+            </button>
+          </div>
+        </div>
+
+        <div class="meta-grid">
+          <div class="field field-wide">
+            <label for="artTitle">Tiêu đề bài viết (H1) <span class="req">*</span></label>
+            <input
+              id="artTitle"
+              type="text"
+              placeholder="Ví dụ: Triển khai ArgoCD trên Kubernetes"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="field">
+            <label for="artSection">Thuộc mục <span class="req">*</span></label>
+            <select id="artSection"></select>
+          </div>
+
+          <div class="field">
+            <label for="artSlug">Tên file (slug)</label>
+            <input id="artSlug" type="text" placeholder="tu-dong-tao-tu-tieu-de" autocomplete="off" />
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="artNavTitle">Tên trên menu</label>
+              <label class="inline-check">
+                <input id="chkSyncNavTitle" type="checkbox" checked />
+                <span>Giống tiêu đề</span>
+              </label>
+            </div>
+            <input id="artNavTitle" type="text" placeholder="Tên hiển thị trên thanh điều hướng" autocomplete="off" />
+          </div>
+
+          <div class="field">
+            <label for="artTags">Tags (phân cách bằng dấu phẩy)</label>
+            <input id="artTags" type="text" placeholder="kubernetes, gitops" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="editor-toolbar">
+          <div class="toolbar-buttons">
+            <button type="button" class="tool-btn" data-md="h2" title="Tiêu đề H2">H2</button>
+            <button type="button" class="tool-btn" data-md="h3" title="Tiêu đề H3">H3</button>
+            <button type="button" class="tool-btn" data-md="bold" title="Chữ đậm"><strong>B</strong></button>
+            <button type="button" class="tool-btn" data-md="italic" title="Chữ nghiêng"><em>I</em></button>
+            <button type="button" class="tool-btn" data-md="code" title="Inline code">&lt;/&gt;</button>
+            <button type="button" class="tool-btn" data-md="fence" title="Khối lệnh">Code block</button>
+            <button type="button" class="tool-btn" data-md="list" title="Danh sách">List</button>
+            <button type="button" class="tool-btn" data-md="table" title="Bảng">Bảng</button>
+            <button type="button" class="tool-btn" data-md="admonition" title="Ghi chú Zensical">Ghi chú</button>
+          </div>
+          <div class="view-switcher">
+            <button type="button" class="view-btn active" data-view="split">Chia đôi</button>
+            <button type="button" class="view-btn" data-view="edit">Soạn thảo</button>
+            <button type="button" class="view-btn" data-view="preview">Xem trước</button>
+          </div>
+        </div>
+
+        <div id="editorSplit" class="editor-split mode-split">
+          <div class="pane pane-edit">
+            <textarea
+              id="artContent"
+              spellcheck="false"
+              placeholder="Nội dung đang để trống — mặc định bài viết sẽ chỉ hiển thị tiêu đề ở trên. Hãy tự viết nội dung Markdown tại đây..."
+            ></textarea>
+          </div>
+          <div class="pane pane-preview">
+            <div id="previewPane" class="markdown-preview"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal Thêm / Sửa Mục -->
+  <div id="sectionModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="sectionModalTitle">Thêm mục mới</h2>
+        <button id="btnCloseSectionModal" class="icon-btn" type="button" aria-label="Đóng">&times;</button>
+      </div>
+      <form id="sectionForm">
+        <div class="modal-body">
+          <div class="field">
+            <label for="secTitle">Tên mục <span class="req">*</span></label>
+            <input id="secTitle" type="text" required placeholder="Ví dụ: Helm & GitOps" autocomplete="off" />
+          </div>
+
+          <div id="secCreateFields">
+            <div class="field">
+              <label for="secKind">Loại mục</label>
+              <select id="secKind">
+                <option value="group">Nhóm có nhiều bài viết con (tạo thư mục + Tổng quan)</option>
+                <option value="page">Trang đơn cấp 1 (1 file .md)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="secSlug">Slug (tên thư mục / file)</label>
+              <input id="secSlug" type="text" placeholder="tu-dong-tao-tu-ten-muc" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label for="secTags">Tags trang Tổng quan (tùy chọn)</label>
+              <input id="secTags" type="text" placeholder="devops, helm" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btnCancelSectionModal" class="btn btn-ghost" type="button">Hủy</button>
+          <button id="btnSubmitSectionModal" class="btn btn-primary" type="submit">Lưu mục</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Chi tiết Kiểm tra -->
+  <div id="validationModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h2>Kiểm tra cấu trúc & liên kết tài liệu</h2>
+        <button id="btnCloseValidationModal" class="icon-btn" type="button" aria-label="Đóng">&times;</button>
+      </div>
+      <div id="validationModalBody" class="modal-body"></div>
+      <div class="modal-footer">
+        <button id="btnDoneValidationModal" class="btn btn-primary" type="button">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
