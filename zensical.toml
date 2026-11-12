@@ -1,7 +1,7 @@
 # DevOps Knowledge Base - Zensical 0.1.1
-# Trước khi publish, thêm site_url phù hợp hosting thật (đặc biệt khi dùng GitHub Pages).
 [project]
 site_name = "DevOps Knowledge Base"
+site_url = "https://deploy-website.github.io/devops-knowledge-hub/"
 site_description = "Tài liệu DevOps thực chiến: Linux, Docker, Git, CI/CD, Kubernetes, Terraform, AWS, Observability, Security và Runbooks."
 site_author = "DevOps Engineering"
 copyright = "© 2026 DevOps Knowledge Base"
